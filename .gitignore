@@ -1,0 +1,10 @@
+# Python environment
+.thor/
+__pycache__/
+*.pyc
+
+# Secrets
+.thor
+
+# Editor settings
+.vscode/
