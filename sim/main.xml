@@ -1,0 +1,174 @@
+<mujoco model="thor">
+  <!-- Thor 6-DOF arm (AngelLM/Thor, CC BY-SA 4.0).
+       Layout: sim/main.xml, sim/meshes/collision/{arm,body,gripper}/*.stl
+       Units: metres, kg, radians. All joint angles 0 = home pose (arm straight up). -->
+  <compiler meshdir="meshes" angle="radian" autolimits="true" inertiafromgeom="true" balanceinertia="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <default>
+    <geom type="mesh" density="350" contype="0" conaffinity="0"/>
+    <joint damping="1.0" armature="0.01"/>
+    <position kp="60" forcerange="-15 15"/>
+    <default class="base"><geom rgba="0.25 0.25 0.28 1"/></default>
+    <default class="link1"><geom rgba="0.85 0.85 0.88 1"/></default>
+    <default class="link2"><geom rgba="0.80 0.18 0.15 1"/></default>
+    <default class="link3"><geom rgba="0.85 0.85 0.88 1"/></default>
+    <default class="link4"><geom rgba="0.80 0.18 0.15 1"/></default>
+    <default class="link5"><geom rgba="0.85 0.85 0.88 1"/></default>
+    <default class="link6"><geom rgba="0.20 0.20 0.22 1"/></default>
+    <default class="gripper"><geom rgba="0.95 0.60 0.10 1"/></default>
+  </default>
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 .2 .3" width="300" height="300"/>
+    <material name="grid" texture="grid" texrepeat="6 6" reflectance=".15"/>
+    <mesh name="Art1Body" file="collision/arm/Art1Body.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art1Bot" file="collision/arm/Art1Bot.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art1FanHolder" file="collision/arm/Art1FanHolder.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art1GearMotor" file="collision/body/Art1GearMotor.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art1Top" file="collision/arm/Art1Top.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art23Optodisk" file="collision/arm/Art23Optodisk.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyA" file="collision/arm/Art2BodyA.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyACover1" file="collision/arm/Art2BodyACover1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyACover2" file="collision/arm/Art2BodyACover2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyAWindow" file="collision/arm/Art2BodyAWindow.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyB" file="collision/arm/Art2BodyB.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyBCover" file="collision/arm/Art2BodyBCover.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2BodyUnion" file="collision/arm/Art2BodyUnion.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2MotorGear" file="collision/arm/Art2MotorGear.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art2SideCover" file="collision/arm/Art2SideCover.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art3Body" file="collision/arm/Art3Body.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art3Pulley" file="collision/arm/Art3Pulley.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art3TensionerBody" file="collision/arm/Art3TensionerBody.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art3TensionerPulley" file="collision/arm/Art3TensionerPulley.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4BearingFix" file="collision/arm/Art4BearingFix.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4BearingRing" file="collision/arm/Art4BearingRing.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4Body" file="collision/arm/Art4Body.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4BodyBot" file="collision/arm/Art4BodyBot.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4BodyFan" file="collision/arm/Art4BodyFan.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4MotorFix" file="collision/arm/Art4MotorFix.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4MotorGear" file="collision/arm/Art4MotorGear.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4Optodisk" file="collision/arm/Art4Optodisk.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art4TransmissionColumn" file="collision/arm/Art4TransmissionColumn.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art56GearPlate" file="collision/arm/Art56GearPlate.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art56MotorCoverRing" file="collision/arm/Art56MotorCoverRing.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art56MotorHolderA" file="collision/arm/Art56MotorHolderA.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art56MotorHolderB" file="collision/arm/Art56MotorHolderB.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="Art56SmallGear" file="collision/arm/Art56SmallGear.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="BaseBearingFix" file="collision/body/BaseBearingFix.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="BaseBot" file="collision/body/BaseBot.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="BaseBoxBody" file="collision/body/BaseBoxBody.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="BaseBoxCover" file="collision/body/BaseBoxCover.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="BaseTop" file="collision/body/BaseTop.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="CommonBearingFix" file="collision/arm/CommonBearingFix.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="CommonBearingFixThrough" file="collision/arm/CommonBearingFixThrough.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperActiveArm" file="collision/gripper/GripperActiveArm.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperArm" file="collision/gripper/GripperArm.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperBot" file="collision/gripper/GripperBot.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperFinger" file="collision/gripper/GripperFinger.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperPassiveArm" file="collision/gripper/GripperPassiveArm.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperTop" file="collision/gripper/GripperTop.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+  <worldbody>
+    <light pos="0 0 2" dir="0 0 -1" diffuse=".8 .8 .8"/>
+    <geom name="floor" type="plane" size="1.5 1.5 0.1" material="grid" contype="1" conaffinity="1"/>
+    <!-- BODY: fixed base -->
+    <body name="base" childclass="base">
+      <geom name="base_Art1GearMotor_0" mesh="Art1GearMotor" pos="0.04 5.17e-17 0.059" quat="3e-16 0 5e-16 1"/>
+      <geom name="base_BaseBearingFix_1" mesh="BaseBearingFix" pos="6e-19 1.8e-17 0.093" quat="0.5 0 -1e-16 -0.866025"/>
+      <geom name="base_BaseBot_2" mesh="BaseBot" pos="0 0 0" quat="1 0 0 0"/>
+      <geom name="base_BaseBoxBody_3" mesh="BaseBoxBody" pos="0 0 0" quat="1e-16 0 0 1"/>
+      <geom name="base_BaseBoxCover_4" mesh="BaseBoxCover" pos="2.84e-17 5.78e-17 0.0655" quat="-2e-16 -2e-16 1e-16 1"/>
+      <geom name="base_BaseTop_5" mesh="BaseTop" pos="0 1.45e-17 0.0655" quat="0.866025 2e-16 2e-16 0.5"/>
+    </body>
+    <!-- ARM: link1..link6 chained, one hinge each -->
+    <body name="link1" pos="0 0 0.079" childclass="link1">
+      <joint name="j1" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
+      <geom name="link1_Art1Body_0" mesh="Art1Body" pos="-3.56937e-07 3.07489e-07 0.025" quat="1 0 7e-16 2.03225e-07"/>
+      <geom name="link1_Art1Bot_1" mesh="Art1Bot" pos="6.6e-18 -7e-18 -0.03" quat="0.258819 1e-16 4e-16 0.965926"/>
+      <geom name="link1_Art1FanHolder_2" mesh="Art1FanHolder" pos="0.040869 3.24113e-07 0.0378693" quat="0.653281 -0.270598 -0.270598 0.653282"/>
+      <geom name="link1_Art1FanHolder_3" mesh="Art1FanHolder" pos="-0.0408697 2.90866e-07 0.0378693" quat="0.653282 -0.270598 0.270598 -0.653281"/>
+      <geom name="link1_Art1Top_4" mesh="Art1Top" pos="-3.56937e-07 3.07489e-07 0.007" quat="0.707107 -1e-16 1e-16 -0.707107"/>
+      <geom name="link1_Art23Optodisk_5" mesh="Art23Optodisk" pos="-3.71174e-07 0.0350003 0.123" quat="0.707107 -0.707107 -1.43809e-07 1.43809e-07"/>
+      <geom name="link1_Art2BodyACover1_6" mesh="Art2BodyACover1" pos="-3.42701e-07 -0.0349997 0.123" quat="0.707107 0.707107 1.43809e-07 1.43809e-07"/>
+      <geom name="link1_Art2MotorGear_7" mesh="Art2MotorGear" pos="-0.0215003 -0.0452497 0.0797" quat="0.460099 0.460099 0.536944 -0.536944"/>
+      <geom name="link1_Art2MotorGear_8" mesh="Art2MotorGear" pos="0.0214997 -0.0452497 0.0797" quat="0.460099 0.460099 0.536944 -0.536944"/>
+      <geom name="link1_CommonBearingFixThrough_9" mesh="CommonBearingFixThrough" pos="-3.71987e-07 0.0370003 0.123" quat="0.5 -0.5 -0.5 -0.5"/>
+      <body name="link2" pos="0 0 0.123" childclass="link2">
+        <joint name="j2" type="hinge" axis="0 1 0" range="-3.1416 3.1416"/>
+        <geom name="link2_Art2BodyA_0" mesh="Art2BodyA" pos="-5.9e-18 -0.068 0" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_Art2BodyACover2_1" mesh="Art2BodyACover2" pos="-1.55745e-17 -0.036 -8.32667e-17" quat="0.707107 0.707107 4.14214e-17 0"/>
+        <geom name="link2_Art2BodyAWindow_2" mesh="Art2BodyAWindow" pos="-4.30274e-17 -0.068 0.16" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_Art2BodyB_3" mesh="Art2BodyB" pos="-7.9667e-18 0.068 -1.38778e-16" quat="0.707107 0.707107 1.12132e-16 -3.53553e-16"/>
+        <geom name="link2_Art2BodyBCover_4" mesh="Art2BodyBCover" pos="-2.05922e-17 0.036 -1.11022e-16" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_Art2BodyUnion_5" mesh="Art2BodyUnion" pos="7.20294e-18 -1.42109e-17 0.08" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_Art2SideCover_6" mesh="Art2SideCover" pos="-6.18284e-18 -0.07 0" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_Art2SideCover_7" mesh="Art2SideCover" pos="2.11615e-18 0.07 -1.38778e-16" quat="0.707107 0.707107 4.14214e-17 -4.24264e-16"/>
+        <geom name="link2_Art3TensionerBody_8" mesh="Art3TensionerBody" pos="-0.0105 -0.063 0.09985" quat="-0.5 0.5 0.5 0.5"/>
+        <geom name="link2_Art3TensionerBody_9" mesh="Art3TensionerBody" pos="0.0105 -0.063 0.09985" quat="-0.5 0.5 -0.5 -0.5"/>
+        <geom name="link2_Art3TensionerPulley_10" mesh="Art3TensionerPulley" pos="-0.0145 -0.052 0.09985" quat="-0.5 0.5 0.5 0.5"/>
+        <geom name="link2_Art3TensionerPulley_11" mesh="Art3TensionerPulley" pos="0.0145 -0.052 0.09985" quat="-0.5 0.5 -0.5 -0.5"/>
+        <geom name="link2_CommonBearingFix_12" mesh="CommonBearingFix" pos="1.2604e-16 0.064 0.16" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_CommonBearingFix_13" mesh="CommonBearingFix" pos="9.06762e-18 0.064 -1.38778e-16" quat="1e-16 0 0.707107 0.707107"/>
+        <geom name="link2_CommonBearingFix_14" mesh="CommonBearingFix" pos="-2.39343e-17 -0.064 0" quat="0.707107 0.707107 -2.41421e-16 0"/>
+        <geom name="link2_CommonBearingFix_15" mesh="CommonBearingFix" pos="-6.16617e-17 -0.064 0.16" quat="0.707107 0.707107 -1e-16 1.41421e-16"/>
+        <body name="link3" pos="0 0 0.16" childclass="link3">
+          <joint name="j3" type="hinge" axis="0 1 0" range="-3.1416 3.1416"/>
+          <geom name="link3_Art23Optodisk_0" mesh="Art23Optodisk" pos="1.18e-17 0.035 0" quat="4e-16 -2e-16 0.707107 0.707107"/>
+          <geom name="link3_Art3Body_1" mesh="Art3Body" pos="-1.42e-17 2.7e-18 0.0885" quat="0 0 1 0"/>
+          <geom name="link3_Art3Pulley_2" mesh="Art3Pulley" pos="5.6e-18 -0.053 -1.11022e-16" quat="0 -1e-16 0.707107 0.707107"/>
+          <geom name="link3_Art4BearingRing_3" mesh="Art4BearingRing" pos="-2.04e-17 0 0.0775" quat="0.707107 1e-16 1e-16 -0.707107"/>
+          <geom name="link3_Art4MotorFix_4" mesh="Art4MotorFix" pos="-0.02785 -1.36e-17 -0.0011" quat="1 -1.5e-15 2e-16 1e-16"/>
+          <geom name="link3_Art4MotorGear_5" mesh="Art4MotorGear" pos="-0.02785 3.49e-17 0.0149" quat="1 -1.4e-15 3e-16 -2e-16"/>
+          <geom name="link3_CommonBearingFixThrough_6" mesh="CommonBearingFixThrough" pos="5.3e-18 -0.049 -5.55112e-17" quat="1e-16 0 0.707107 -0.707107"/>
+          <geom name="link3_CommonBearingFixThrough_7" mesh="CommonBearingFixThrough" pos="-4.8e-18 0.037 0" quat="0.5 -0.5 0.5 0.5"/>
+          <body name="link4" pos="0 0 0.0825" childclass="link4">
+            <joint name="j4" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
+            <geom name="link4_Art4BearingFix_0" mesh="Art4BearingFix" pos="1.394e-16 0.051 0.1115" quat="-3.29289e-16 7.07107e-17 0.707107 0.707107"/>
+            <geom name="link4_Art4BearingFix_1" mesh="Art4BearingFix" pos="7.78e-17 -0.051 0.1115" quat="0.707107 0.707107 3.29289e-16 -6.70711e-16"/>
+            <geom name="link4_Art4Body_2" mesh="Art4Body" pos="-1.71e-17 9.6e-18 0.0115" quat="0.707107 -3.29289e-16 4.70711e-16 -0.707107"/>
+            <geom name="link4_Art4BodyBot_3" mesh="Art4BodyBot" pos="-2.5e-17 1.1e-17 0.007" quat="0.707107 -3.29289e-16 4.70711e-16 -0.707107"/>
+            <geom name="link4_Art4BodyFan_4" mesh="Art4BodyFan" pos="-5.25e-17 -0.066 0.0115" quat="0.707107 5.70711e-16 2.92893e-17 0.707107"/>
+            <geom name="link4_Art4BodyFan_5" mesh="Art4BodyFan" pos="3.71e-17 0.066 0.0115" quat="0.707107 -8.29289e-16 -2.92893e-17 -0.707107"/>
+            <geom name="link4_Art4Optodisk_6" mesh="Art4Optodisk" pos="-1.61e-17 1.61e-17 -0.005" quat="5e-16 1 -1.9e-15 -1e-16"/>
+            <geom name="link4_Art4TransmissionColumn_7" mesh="Art4TransmissionColumn" pos="-2.1e-17 1.38e-17 -0.069" quat="0.92388 9.2388e-17 -3.82683e-17 0.382683"/>
+            <geom name="link4_Art56MotorHolderA_8" mesh="Art56MotorHolderA" pos="0.024 -0.0103 0.0336" quat="-7.70711e-16 -8.29289e-16 0.707107 -0.707107"/>
+            <geom name="link4_Art56MotorHolderA_9" mesh="Art56MotorHolderA" pos="-0.024 0.0103 0.0336" quat="0.707107 -0.707107 8.70711e-16 7.29289e-16"/>
+            <geom name="link4_Art56MotorHolderB_10" mesh="Art56MotorHolderB" pos="0.024 0.0237 0.0336" quat="-7.29289e-16 9.70711e-16 0.707107 0.707107"/>
+            <geom name="link4_Art56MotorHolderB_11" mesh="Art56MotorHolderB" pos="-0.024 -0.0237 0.0336" quat="0.707107 0.707107 6.29289e-16 -8.70711e-16"/>
+            <body name="link5" pos="0 0 0.1115" childclass="link5">
+              <joint name="j5" type="hinge" axis="0 1 0" range="-3.1416 3.1416"/>
+              <geom name="link5_Art56MotorCoverRing_0" mesh="Art56MotorCoverRing" pos="-3.07e-17 -1.37e-17 0" quat="0.707107 -0.707107 -1.28505e-16 -1.28505e-16"/>
+              <geom name="link5_Art56SmallGear_1" mesh="Art56SmallGear" pos="-6.61171e-08 -0.0394 -1.52643e-08" quat="0.702561 -0.702561 -0.0800468 -0.0800468"/>
+              <geom name="link5_Art56SmallGear_2" mesh="Art56SmallGear" pos="-6.78563e-08 0.0394 0" quat="0.707107 0.707107 2.85046e-17 -2.85046e-17"/>
+              <geom name="link5_CommonBearingFixThrough_3" mesh="CommonBearingFixThrough" pos="-1.18661e-17 -0.003 0" quat="1.87383e-16 -2.85046e-17 0.707107 -0.707107"/>
+              <body name="link6" pos="0 0 0.022" childclass="link6">
+                <joint name="j6" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
+                <geom name="link6_Art56GearPlate_0" mesh="Art56GearPlate" pos="-3.48406e-17 -2.73406e-17 -0.0005" quat="-2.62132e-16 0.965926 0.258819 1.57313e-16"/>
+                <!-- GRIPPER: rigid on link6 (no finger joint yet) -->
+                <body name="gripper" pos="0 0 0" childclass="gripper">
+                  <geom name="gripper_GripperActiveArm_0" mesh="GripperActiveArm" pos="0.00241049 0.0145216 0.067" quat="0.50054 -0.498096 -0.501897 0.49946"/>
+                  <geom name="gripper_GripperArm_1" mesh="GripperArm" pos="0.00266632 -0.00599277 0.0855" quat="-0.000962067 -0.707106 -0.000962067 0.707106"/>
+                  <geom name="gripper_GripperArm_2" mesh="GripperArm" pos="0.00263366 0.00600719 0.0855" quat="0.707106 0.000962067 -0.707106 0.000962067"/>
+                  <geom name="gripper_GripperBot_3" mesh="GripperBot" pos="0.0171499 4.66674e-05 0.0345" quat="0.50068 0.50068 -0.499319 -0.499319"/>
+                  <geom name="gripper_GripperFinger_4" mesh="GripperFinger" pos="0.00757939 0.0535208 0.063" quat="0.50068 0.50068 -0.499319 -0.499319"/>
+                  <geom name="gripper_GripperPassiveArm_5" mesh="GripperPassiveArm" pos="0.00268945 -0.0144927 0.067" quat="0.470416 0.529207 -0.468978 -0.527929"/>
+                  <geom name="gripper_GripperTop_6" mesh="GripperTop" pos="-0.00264999 -7.211e-06 0.0345" quat="0.50068 0.50068 -0.499319 -0.499319"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="a1" joint="j1"/>
+    <position name="a2" joint="j2"/>
+    <position name="a3" joint="j3"/>
+    <position name="a4" joint="j4"/>
+    <position name="a5" joint="j5"/>
+    <position name="a6" joint="j6"/>
+  </actuator>
+  <keyframe>
+    <key name="home" qpos="0 0 0 0 0 0" ctrl="0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>
