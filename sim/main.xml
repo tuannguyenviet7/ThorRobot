@@ -3,7 +3,13 @@
        Layout: sim/main.xml, sim/meshes/collision/{arm,body,gripper}/*.stl
        Units: metres, kg, radians. All joint angles 0 = home pose (arm straight up). -->
   <compiler meshdir="meshes" angle="radian" autolimits="true" inertiafromgeom="true" balanceinertia="true"/>
+
   <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <visual>
+    <scale framelength="0.5" framewidth="0.02"/>
+  </visual>
+
   <default>
     <geom type="mesh" density="350" contype="0" conaffinity="0"/>
     <joint damping="1.0" armature="0.01"/>
@@ -17,6 +23,7 @@
     <default class="link6"><geom rgba="0.20 0.20 0.22 1"/></default>
     <default class="gripper"><geom rgba="0.95 0.60 0.10 1"/></default>
   </default>
+
   <asset>
     <texture name="grid" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 .2 .3" width="300" height="300"/>
     <material name="grid" texture="grid" texrepeat="6 6" reflectance=".15"/>
@@ -64,12 +71,15 @@
     <mesh name="GripperArm" file="collision/gripper/GripperArm.stl" scale="0.001 0.001 0.001"/>
     <mesh name="GripperBot" file="collision/gripper/GripperBot.stl" scale="0.001 0.001 0.001"/>
     <mesh name="GripperFinger" file="collision/gripper/GripperFinger.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="GripperFingerL" file="collision/gripper/GripperFinger.stl" scale="-0.001 0.001 0.001"/>
     <mesh name="GripperPassiveArm" file="collision/gripper/GripperPassiveArm.stl" scale="0.001 0.001 0.001"/>
     <mesh name="GripperTop" file="collision/gripper/GripperTop.stl" scale="0.001 0.001 0.001"/>
   </asset>
+
   <worldbody>
     <light pos="0 0 2" dir="0 0 -1" diffuse=".8 .8 .8"/>
-    <geom name="floor" type="plane" size="1.5 1.5 0.1" material="grid" contype="1" conaffinity="1"/>
+    <geom name="floor" type="plane" size="0 0 0.1" contype="1" conaffinity="1"/>
+    <geom name="box" type="box" size="0.1 0.1 0.1" contype="1" conaffinity="1"/>
     <!-- BODY: fixed base -->
     <body name="base" childclass="base">
       <geom name="base_Art1GearMotor_0" mesh="Art1GearMotor" pos="0.04 5.17e-17 0.059" quat="3e-16 0 5e-16 1"/>
@@ -143,15 +153,48 @@
               <body name="link6" pos="0 0 0.022" childclass="link6">
                 <joint name="j6" type="hinge" axis="0 0 1" range="-3.1416 3.1416"/>
                 <geom name="link6_Art56GearPlate_0" mesh="Art56GearPlate" pos="-3.48406e-17 -2.73406e-17 -0.0005" quat="-2.62132e-16 0.965926 0.258819 1.57313e-16"/>
-                <!-- GRIPPER: rigid on link6 (no finger joint yet) -->
+                <!-- GRIPPER: independently moving gears, arms, and fingers -->
                 <body name="gripper" pos="0 0 0" childclass="gripper">
-                  <geom name="gripper_GripperActiveArm_0" mesh="GripperActiveArm" pos="0.00241049 0.0145216 0.067" quat="0.50054 -0.498096 -0.501897 0.49946"/>
-                  <geom name="gripper_GripperArm_1" mesh="GripperArm" pos="0.00266632 -0.00599277 0.0855" quat="-0.000962067 -0.707106 -0.000962067 0.707106"/>
-                  <geom name="gripper_GripperArm_2" mesh="GripperArm" pos="0.00263366 0.00600719 0.0855" quat="0.707106 0.000962067 -0.707106 0.000962067"/>
                   <geom name="gripper_GripperBot_3" mesh="GripperBot" pos="0.0171499 4.66674e-05 0.0345" quat="0.50068 0.50068 -0.499319 -0.499319"/>
-                  <geom name="gripper_GripperFinger_4" mesh="GripperFinger" pos="0.00757939 0.0535208 0.063" quat="0.50068 0.50068 -0.499319 -0.499319"/>
-                  <geom name="gripper_GripperPassiveArm_5" mesh="GripperPassiveArm" pos="0.00268945 -0.0144927 0.067" quat="0.470416 0.529207 -0.468978 -0.527929"/>
                   <geom name="gripper_GripperTop_6" mesh="GripperTop" pos="-0.00264999 -7.211e-06 0.0345" quat="0.50068 0.50068 -0.499319 -0.499319"/>
+                    <!-- The right gear is driven; the left gear follows through contact. -->
+                    <body name="hand_R">
+                      <joint name="finger_R_joint" type="hinge" pos="0.00241049 0.0145216 0.067" axis="1 0 0" range="-0.8 0.8" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperActiveArm" mesh="GripperActiveArm" pos="0.00241049 0.0145216 0.067" quat="0.50054 -0.498096 -0.501897 0.49946" contype="1" conaffinity="1"/>
+                      <site name="gear_right_site" type="sphere" size="0.001" pos="0.00241049 0.0445 0.067"/>
+                    </body>
+                    <body name="hand_L">
+                      <joint name="finger_L_joint" type="hinge" pos="0.00268945 -0.0144927 0.067" axis="1 0 0" range="-0.8 0.8" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperPassiveArm" mesh="GripperPassiveArm" pos="0.00268945 -0.0144927 0.067" quat="0.470416 0.529207 -0.468978 -0.527929" contype="1" conaffinity="1"/>
+                      <site name="gear_left_site" type="sphere" size="0.001" pos="0.00268945 -0.0445 0.067"/>
+                    </body>
+                    <!-- Arm meshes sit on the opposite side of their matching fingers. -->
+                    <body name="arm_R">
+                      <joint name="arm_R_joint" type="hinge" pos="0.00241049 -0.0025 0.0855" axis="1 0 0" range="-0.8 0.8" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperArm_R" mesh="GripperArm" pos="0.00266632 -0.00599277 0.0855" quat="-0.000962067 -0.707106 -0.000962067 0.707106" contype="0" conaffinity="0"/>
+                      <site name="arm_right_site" type="sphere" size="0.001" pos="0.00241049 -0.0445 0.0855"/>
+                    </body>
+                    <body name="arm_L">
+                      <joint name="arm_L_joint" type="hinge" pos="0.00241049 0.0025 0.0855" axis="1 0 0" range="-0.8 0.8" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperArm_L" mesh="GripperArm" pos="0.00263366 0.00600719 0.0855" quat="0.707106 0.000962067 -0.707106 0.000962067" contype="0" conaffinity="0"/>
+                      <site name="arm_left_site" type="sphere" size="0.001" pos="0.00241049 0.0445 0.0855"/>
+                    </body>
+                    <body name="finger_R">
+                      <joint name="finger_R_slide_x" type="slide" axis="1 0 0" damping="0.05" armature="0.001"/>
+                      <joint name="finger_R_slide_y" type="slide" axis="0 1 0" damping="0.05" armature="0.001"/>
+                      <joint name="finger_R_slide_z" type="slide" axis="0 0 1" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperFinger_R" mesh="GripperFinger" pos="0.00757939 0.0535208 0.063" quat="0.50068 0.50068 -0.499319 -0.499319" contype="0" conaffinity="0"/>
+                      <site name="gripper_right_site" type="sphere" size="0.001" pos="0.00241049 0.0445 0.067"/>
+                      <site name="gripper_right_site2" type="sphere" size="0.001" pos="0.00241049 0.0445 0.0855"/>
+                    </body>
+                    <body name="finger_L">
+                      <joint name="finger_L_slide_x" type="slide" axis="1 0 0" damping="0.05" armature="0.001"/>
+                      <joint name="finger_L_slide_y" type="slide" axis="0 1 0" damping="0.05" armature="0.001"/>
+                      <joint name="finger_L_slide_z" type="slide" axis="0 0 1" damping="0.05" armature="0.001"/>
+                      <geom name="gripper_GripperFinger_L" mesh="GripperFingerL" pos="0.00757939 -0.0535208 0.063" quat="0.50068 0.50068 -0.499319 -0.499319" contype="0" conaffinity="0"/>
+                      <site name="gripper_left_site" type="sphere" size="0.001" pos="0.00268945 -0.0445 0.067"/>
+                      <site name="gripper_left_site2" type="sphere" size="0.001" pos="0.00241049 -0.0445 0.0855"/>
+                    </body>
                 </body>
               </body>
             </body>
@@ -160,6 +203,15 @@
       </body>
     </body>
   </worldbody>
+
+  <equality>
+  <!-- q_L = -q_R : meshing gears turn in opposite directions, ratio 1:1 -->
+    <connect site1="gear_left_site" site2="gripper_left_site" />
+    <connect site1="arm_right_site" site2="gripper_left_site2" />
+    <connect site1="gear_right_site" site2="gripper_right_site" />
+    <connect site1="arm_left_site" site2="gripper_right_site2" />
+  </equality>
+
   <actuator>
     <position name="a1" joint="j1"/>
     <position name="a2" joint="j2"/>
@@ -167,8 +219,11 @@
     <position name="a4" joint="j4"/>
     <position name="a5" joint="j5"/>
     <position name="a6" joint="j6"/>
+    <position name="gripper_drive" joint="finger_R_joint" kp="5" ctrlrange="-1.8 1.8" forcerange="-2 2"/>
   </actuator>
+
   <keyframe>
-    <key name="home" qpos="0 0 0 0 0 0" ctrl="0 0 0 0 0 0"/>
+    <key name="home" qpos="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" ctrl="0 0 0 0 0 0 0"/>
   </keyframe>
+
 </mujoco>
